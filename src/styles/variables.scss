@@ -1,0 +1,30 @@
+//Colours
+
+$text: rgb(9, 10, 6);
+$background: rgb(241, 242, 232);
+$primary: rgb(130, 168, 103);
+$secondary: rgb(216, 233, 218);
+$accent: rgb(89, 155, 95);
+
+//Fonts
+@font-face {
+  font-family: "Quicksand";
+  font-style: normal;
+  font-weight: 400;
+  src: url("https://fonts.gstatic.com/s/quicksand/v25/6xKtdSZaM9iE8KbpRA_LJ3z8mH9BOJvgk9PmG_8AAv2L0hzH5F3nmX0IRf5v9nEHpkw.woff2")
+    format("woff2");
+}
+
+//Media Breaks
+$small-screen: 576px; // Small screens (e.g., smartphones)
+$medium-screen: 768px; // Medium screens (e.g., tablets)
+$large-screen: 992px; // Large screens (e.g., small laptops/desktops)
+$extra-large-screen: 1200px; // Extra-large screens (e.g., larger desktops)
+
+//Layout
+@mixin flex($display: flex, $direction: row, $justify: center, $align: center) {
+  display: $display;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+}

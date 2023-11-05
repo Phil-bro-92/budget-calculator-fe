@@ -1,0 +1,17 @@
+@import "./variables.scss";
+nav {
+  @include flex($justify: space-between);
+  img {
+    width: 40%;
+  }
+
+  .menu {
+    @include flex;
+    margin: 0 1%;
+
+    .menu_icon {
+      margin: 0 20px;
+      font-family: "Quicksand", sans-serif;
+    }
+  }
+}
