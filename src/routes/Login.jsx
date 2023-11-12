@@ -1,11 +1,18 @@
 import axios from "axios";
 import { useState } from "react";
 import { Button } from "@mui/material";
+import regexPatterns from "../utils/regex";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-    const url = "http://localhost:9000";
+    const navigate = useNavigate();
+    const url = process.env.REACT_APP_API_URL;
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    //Alerts
+    const [alert, setAlert] = useState("");
+    const [message, setMessage] = useState("");
 
     const handleLogin = () => {
         let data = {
@@ -13,11 +20,33 @@ export default function Login() {
             password: password
         };
 
-        axios.post(`${url}/customers/login`, data).then(res => {
-            console.log(res).catch(err => {
-                console.log(err);
-            });
-        });
+        if (email === "" || password === "") {
+            setMessage("Please complete all required fields");
+            setAlert(true);
+            setTimeout(() => {
+                setAlert(false);
+                setMessage("");
+            }, 3000);
+        } else if (!email.match(regexPatterns.email)) {
+            setMessage("Please enter a valid email address");
+            setAlert(true);
+            setTimeout(() => {
+                setAlert(false);
+                setMessage("");
+            }, 3000);
+        } else {
+            axios
+                .post(`${url}/login`, data)
+                .then(res => {
+                    console.log(res.data);
+                    const user = JSON.stringify(res.data);
+                    localStorage.setItem("customer", user);
+                    navigate("/");
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
     };
 
     return (
@@ -30,7 +59,11 @@ export default function Login() {
                 type="password"
                 onChange={e => setPassword(e.target.value)}
             />
-            <Button onClick={handleLogin}>Login</Button>
+            {!alert ? (
+                <Button onClick={handleLogin}>Login</Button>
+            ) : (
+                <p>{message}</p>
+            )}
         </main>
     );
 }
