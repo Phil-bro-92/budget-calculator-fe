@@ -3,9 +3,15 @@
 .home {
   background-color: $background;
   padding: 0 5%;
+
   h1 {
     padding-top: 10px;
   }
+
+  h2 {
+    font-size: 1rem;
+  }
+
   .currency {
     @include flex($justify: "space-evenly");
 
@@ -30,6 +36,7 @@
 
   .selected_currency {
     text-align: center;
+
     span {
       color: $primary;
     }
@@ -39,6 +46,7 @@
     background-color: $primary;
     padding: 0 3% 3% 3%;
     border-radius: 8px;
+
     select {
       padding: 2px;
       width: 100%;
@@ -47,19 +55,45 @@
     }
   }
 
+  .name {
+    @include flex($direction: column,
+      $justify: flex-start,
+      $align: flex-start);
+    margin: 5px 0;
+    padding: 0 3% 3% 3%;
+    border-radius: 8px;
+    background-color: $accent;
+    color: $text;
+
+    label {
+      font-size: 1.1rem;
+      font-weight: 700;
+      padding: 5px 0;
+    }
+
+    input {
+      padding: 2px;
+      width: 95%;
+      border-radius: 4px;
+      margin: 0 auto;
+      font-size: 1rem
+    }
+  }
+
   .budget_form {
+
     .income,
     .outgoings {
+
       .income_section,
       .outgoings_section {
-        @include flex(
-          $direction: column,
+        @include flex($direction: column,
           $justify: flex-start,
-          $align: flex-start
-        );
+          $align: flex-start);
         margin: 5px 0;
         padding: 0 3% 3% 3%;
         border-radius: 8px;
+
         label {
           font-size: 1.1rem;
           font-weight: 700;
@@ -85,7 +119,7 @@
     .outgoings {
       .outgoings_section {
         background-color: $accent;
-        color: $background;
+        color: $text;
       }
     }
 

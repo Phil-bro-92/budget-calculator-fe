@@ -1,8 +1,11 @@
+import "../styles/login.scss";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import axios from "axios";
 import regexPatterns from "../utils/regex";
+import TextField from "@mui/material/TextField";
+import Logo from "../assets/budget-logo.png";
 
 export default function Register() {
     const navigate = useNavigate();
@@ -25,7 +28,8 @@ export default function Register() {
             last_name: lastName,
             email: email,
             phone: phone,
-            password: password
+            password: password,
+            budgets: []
         };
 
         if (
@@ -60,7 +64,7 @@ export default function Register() {
             axios
                 .post(`${url}/register`, data)
                 .then(res => {
-                    console.log(res);
+                    navigate("/login");
                 })
                 .catch(err => {
                     console.log(err.response.data);
@@ -77,33 +81,53 @@ export default function Register() {
     };
     return (
         <main className="register">
-            <label>First name</label>
-            <input type="text" onChange={e => setFirstName(e.target.value)} />
-            <label>Second name</label>
-            <input type="text" onChange={e => setLastName(e.target.value)} />
-            <label>Email</label>
-            <input type="email" onChange={e => setEmail(e.target.value)} />
-            <label>Phone</label>
-            <input
+            <img src={Logo} alt="main logo" />
+            <h1>Register</h1>
+            <TextField
+                className="input_field"
+                type="text"
+                onChange={e => setFirstName(e.target.value)}
+                label="First name"
+                variant="filled"
+            />
+            <TextField
+                className="input_field"
+                type="text"
+                onChange={e => setLastName(e.target.value)}
+                label="Last name"
+                variant="filled"
+            />
+            <TextField
+                className="input_field"
+                type="email"
+                onChange={e => setEmail(e.target.value)}
+                label="Email"
+                variant="filled"
+            />
+            <TextField
+                className="input_field"
                 type="number"
                 min="0"
                 onChange={e => setPhone(e.target.value)}
+                label="Phone"
+                variant="filled"
             />
-            <label>Password</label>
-            <input
+            <TextField
+                className="input_field"
                 type="password"
                 onChange={e => setPassword(e.target.value)}
+                label="Password"
+                variant="filled"
             />
-            <label>Confirm password</label>
-            <input
+            <TextField
+                className="input_field"
                 type="password"
                 onChange={e => setConfirmPassword(e.target.value)}
+                label="Confirm password"
+                variant="filled"
             />
             {!alert ? (
-                <Button
-                    variant="contained"
-                    color="success"
-                    onClick={handleRegister}>
+                <Button variant="contained" onClick={handleRegister}>
                     Register
                 </Button>
             ) : (

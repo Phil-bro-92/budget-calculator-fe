@@ -13,9 +13,10 @@ export default function Home() {
     const navigate = useNavigate();
     //Customer
     const [customer, setCustomer] = useState({});
-    //Currency and time
+    //Currency, time, name
     const [selectedCurrency, setSelectedCurrency] = useState("");
     const [selectedTime, setSelectedTime] = useState("");
+    const [name, setName] = useState("");
 
     //Income
     const [income, setIncome] = useState(0);
@@ -44,7 +45,6 @@ export default function Home() {
     }, []);
 
     const handleSubmit = () => {
-        console.log("HERE");
         if (selectedCurrency === "") {
             setMessage("You must provide a currency type before proceeding");
             setAlert(true);
@@ -59,6 +59,13 @@ export default function Home() {
                 setAlert(false);
                 setMessage("");
             }, 3000);
+        } else if (name === "") {
+            setMessage("You must provide a name for your budget");
+            setAlert(true);
+            setTimeout(() => {
+                setAlert(false);
+                setMessage("");
+            }, 3000);
         } else if (income === 0 || income === "") {
             setMessage("You must provide an income before proceeding");
             setAlert(true);
@@ -68,6 +75,8 @@ export default function Home() {
             }, 3000);
         } else {
             let data = {
+                customer: customer._id,
+                name: name,
                 currency: selectedCurrency,
                 period: selectedTime,
                 income: income,
@@ -85,7 +94,8 @@ export default function Home() {
             axios
                 .post("http://localhost:9000/submit", data)
                 .then(res => {
-                    console.log(res);
+                    const user = JSON.stringify(res.data);
+                    localStorage.setItem("customer", user);
                     navigate("/view-budgets");
                 })
                 .catch(err => {
@@ -98,7 +108,8 @@ export default function Home() {
         <>
             <Nav />
             <main className="home">
-                <h1>Let's sort your budget, {customer.first_name}!</h1>
+                <h1>Hi, {customer.first_name}! </h1>
+                <h2>Let's sort your budget </h2>
                 <section className="currency">
                     <Button
                         className="pound"
@@ -149,6 +160,13 @@ export default function Home() {
                         <option>Quarterly</option>
                         <option>Annually</option>
                     </select>
+                </section>
+                <section className="name">
+                    <label>Give your budget a name</label>
+                    <input
+                        type="text"
+                        onChange={e => setName(e.target.value)}
+                    />
                 </section>
                 <form className="budget_form">
                     <h2>Income</h2>
@@ -201,7 +219,7 @@ export default function Home() {
                             <input
                                 type="number"
                                 min="0"
-                                onClick={e => setMedia(e.target.value)}
+                                onChange={e => setMedia(e.target.value)}
                             />
                         </div>
                         <div className="outgoings_section">

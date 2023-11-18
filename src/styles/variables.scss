@@ -1,18 +1,17 @@
 //Colours
 
-$text: rgb(9, 10, 6);
-$background: rgb(241, 242, 232);
-$primary: rgb(130, 168, 103);
-$secondary: rgb(216, 233, 218);
-$accent: rgb(89, 155, 95);
+$text: rgb(11, 25, 19);
+$background: rgb(230, 244, 238);
+$primary: rgb(62, 133, 137);
+$secondary: rgb(202, 215, 231);
+$accent: rgb(71, 110, 158);
 
 //Fonts
 @font-face {
   font-family: "Quicksand";
   font-style: normal;
   font-weight: 400;
-  src: url("https://fonts.gstatic.com/s/quicksand/v25/6xKtdSZaM9iE8KbpRA_LJ3z8mH9BOJvgk9PmG_8AAv2L0hzH5F3nmX0IRf5v9nEHpkw.woff2")
-    format("woff2");
+  src: url("https://fonts.gstatic.com/s/quicksand/v25/6xKtdSZaM9iE8KbpRA_LJ3z8mH9BOJvgk9PmG_8AAv2L0hzH5F3nmX0IRf5v9nEHpkw.woff2") format("woff2");
 }
 
 //Media Breaks

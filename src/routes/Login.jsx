@@ -3,6 +3,8 @@ import { useState } from "react";
 import { Button } from "@mui/material";
 import regexPatterns from "../utils/regex";
 import { useNavigate } from "react-router-dom";
+import TextField from "@mui/material/TextField";
+import Logo from "../assets/budget-logo.png";
 
 export default function Login() {
     const navigate = useNavigate();
@@ -39,8 +41,10 @@ export default function Login() {
                 .post(`${url}/login`, data)
                 .then(res => {
                     console.log(res.data);
-                    const user = JSON.stringify(res.data);
+                    const user = JSON.stringify(res.data.user);
+                    const token = res.data.token;
                     localStorage.setItem("customer", user);
+                    localStorage.setItem("token", token);
                     navigate("/");
                 })
                 .catch(err => {
@@ -51,19 +55,36 @@ export default function Login() {
 
     return (
         <main className="login">
-            <h2>Log in to your account</h2>
-            <label>Email</label>
-            <input type="email" onChange={e => setEmail(e.target.value)} />
-            <label>Password</label>
-            <input
+            <img src={Logo} alt="main logo" />
+            <h1>Login</h1>
+
+            <TextField
+                className="input_field"
+                type="email"
+                label="Email"
+                variant="filled"
+                onChange={e => setEmail(e.target.value)}
+            />
+            <TextField
+                className="input_field"
+                s
                 type="password"
+                label="Password"
+                variant="filled"
                 onChange={e => setPassword(e.target.value)}
             />
+
             {!alert ? (
-                <Button onClick={handleLogin}>Login</Button>
+                <Button variant="contained" onClick={handleLogin}>
+                    Login
+                </Button>
             ) : (
                 <p>{message}</p>
             )}
+            <p>
+                Don't have an account? Register{" "}
+                <span onClick={() => navigate("/register")}>here</span>
+            </p>
         </main>
     );
 }
