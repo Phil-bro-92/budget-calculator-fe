@@ -29,7 +29,7 @@ export default function Register() {
             email: email,
             phone: phone,
             password: password,
-            budgets: []
+            budgets: [],
         };
 
         if (
@@ -63,11 +63,11 @@ export default function Register() {
         } else {
             axios
                 .post(`${url}/register`, data)
-                .then(res => {
+                .then((res) => {
                     navigate("/login");
                 })
-                .catch(err => {
-                    console.log(err.response.data);
+                .catch((err) => {
+                    console.log(err.response);
                     if (err.response.data === "Email is already registered") {
                         setMessage("Email already registered");
                         setAlert(true);
@@ -79,6 +79,13 @@ export default function Register() {
                 });
         }
     };
+
+    const handleEnterPress = (event) => {
+        if (event.key === "Enter") {
+            handleRegister();
+        }
+    };
+    
     return (
         <main className="register">
             <img src={Logo} alt="main logo" />
@@ -86,21 +93,24 @@ export default function Register() {
             <TextField
                 className="input_field"
                 type="text"
-                onChange={e => setFirstName(e.target.value)}
+                onChange={(e) => setFirstName(e.target.value)}
+                onKeyDown={(e) => handleEnterPress(e)}
                 label="First name"
                 variant="filled"
             />
             <TextField
                 className="input_field"
                 type="text"
-                onChange={e => setLastName(e.target.value)}
+                onChange={(e) => setLastName(e.target.value)}
+                onKeyDown={(e) => handleEnterPress(e)}
                 label="Last name"
                 variant="filled"
             />
             <TextField
                 className="input_field"
                 type="email"
-                onChange={e => setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
+                onKeyDown={(e) => handleEnterPress(e)}
                 label="Email"
                 variant="filled"
             />
@@ -108,21 +118,25 @@ export default function Register() {
                 className="input_field"
                 type="number"
                 min="0"
-                onChange={e => setPhone(e.target.value)}
+                onChange={(e) => setPhone(e.target.value)}
+                onKeyDown={(e) => handleEnterPress(e)}
                 label="Phone"
                 variant="filled"
             />
             <TextField
                 className="input_field"
                 type="password"
-                onChange={e => setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
+                onKeyDown={(e) => handleEnterPress(e)}
                 label="Password"
                 variant="filled"
             />
+
             <TextField
                 className="input_field"
                 type="password"
-                onChange={e => setConfirmPassword(e.target.value)}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                onKeyDown={(e) => handleEnterPress(e)}
                 label="Confirm password"
                 variant="filled"
             />

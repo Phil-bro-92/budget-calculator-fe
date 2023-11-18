@@ -75,7 +75,6 @@ export default function Home() {
             }, 3000);
         } else {
             let data = {
-                customer: customer._id,
                 name: name,
                 currency: selectedCurrency,
                 period: selectedTime,
@@ -88,17 +87,18 @@ export default function Home() {
                 food: food,
                 insurance: insurance,
                 creditors: creditors,
-                otherOutgoings: otherOutgoings
+                otherOutgoings: otherOutgoings,
             };
 
             axios
-                .post("http://localhost:9000/submit", data)
-                .then(res => {
-                    const user = JSON.stringify(res.data);
-                    localStorage.setItem("customer", user);
+                .post(`http://localhost:9000/submit/${customer._id}`, data)
+                .then((res) => {
+                    console.log(res);
+                    let customer = JSON.stringify(res.data);
+                    localStorage.setItem("customer", customer);
                     navigate("/view-budgets");
                 })
-                .catch(err => {
+                .catch((err) => {
                     console.log(err);
                 });
         }
@@ -114,7 +114,8 @@ export default function Home() {
                     <Button
                         className="pound"
                         variant="contained"
-                        onClick={() => setSelectedCurrency("pound")}>
+                        onClick={() => setSelectedCurrency("pound")}
+                    >
                         {" "}
                         <CurrencyPoundIcon />
                     </Button>
@@ -122,14 +123,16 @@ export default function Home() {
                         className="dollar"
                         variant="contained"
                         color="success"
-                        onClick={() => setSelectedCurrency("dollar")}>
+                        onClick={() => setSelectedCurrency("dollar")}
+                    >
                         <AttachMoneyIcon />
                     </Button>
                     <Button
                         className="euro"
                         variant="contained"
                         color="warning"
-                        onClick={() => setSelectedCurrency("euro")}>
+                        onClick={() => setSelectedCurrency("euro")}
+                    >
                         {" "}
                         <EuroSymbolIcon />
                     </Button>
@@ -137,7 +140,8 @@ export default function Home() {
                         className="yen"
                         variant="contained"
                         color="error"
-                        onClick={() => setSelectedCurrency("yen")}>
+                        onClick={() => setSelectedCurrency("yen")}
+                    >
                         {" "}
                         <CurrencyYenIcon />
                     </Button>
@@ -153,7 +157,7 @@ export default function Home() {
                 ) : null}
                 <section className="time">
                     <h3>How would you like to plan?</h3>
-                    <select onChange={e => setSelectedTime(e.target.value)}>
+                    <select onChange={(e) => setSelectedTime(e.target.value)}>
                         <option>Please select</option>
                         <option>Weekly</option>
                         <option>Monthly</option>
@@ -165,7 +169,7 @@ export default function Home() {
                     <label>Give your budget a name</label>
                     <input
                         type="text"
-                        onChange={e => setName(e.target.value)}
+                        onChange={(e) => setName(e.target.value)}
                     />
                 </section>
                 <form className="budget_form">
@@ -176,7 +180,7 @@ export default function Home() {
                             <input
                                 type="number"
                                 min="0"
-                                onChange={e => setIncome(e.target.value)}
+                                onChange={(e) => setIncome(e.target.value)}
                             />
                         </div>
                         <div className="income_section">
@@ -184,7 +188,7 @@ export default function Home() {
                             <input
                                 type="number"
                                 min="0"
-                                onChange={e => setOtherIncome(e.target.value)}
+                                onChange={(e) => setOtherIncome(e.target.value)}
                             />
                         </div>
                     </section>
@@ -195,7 +199,7 @@ export default function Home() {
                             <input
                                 type="number"
                                 min="0"
-                                onChange={e => setMortgage(e.target.value)}
+                                onChange={(e) => setMortgage(e.target.value)}
                             />
                         </div>
                         <div className="outgoings_section">
@@ -203,7 +207,7 @@ export default function Home() {
                             <input
                                 type="number"
                                 min="0"
-                                onChange={e => setCar(e.target.value)}
+                                onChange={(e) => setCar(e.target.value)}
                             />
                         </div>
                         <div className="outgoings_section">
@@ -211,7 +215,7 @@ export default function Home() {
                             <input
                                 type="number"
                                 min="0"
-                                onChange={e => setTaxes(e.target.value)}
+                                onChange={(e) => setTaxes(e.target.value)}
                             />
                         </div>
                         <div className="outgoings_section">
@@ -219,7 +223,7 @@ export default function Home() {
                             <input
                                 type="number"
                                 min="0"
-                                onChange={e => setMedia(e.target.value)}
+                                onChange={(e) => setMedia(e.target.value)}
                             />
                         </div>
                         <div className="outgoings_section">
@@ -227,7 +231,7 @@ export default function Home() {
                             <input
                                 type="number"
                                 min="0"
-                                onChange={e => setFood(e.target.value)}
+                                onChange={(e) => setFood(e.target.value)}
                             />
                         </div>
                         <div className="outgoings_section">
@@ -235,7 +239,7 @@ export default function Home() {
                             <input
                                 type="number"
                                 min="0"
-                                onChange={e => setInsurance(e.target.value)}
+                                onChange={(e) => setInsurance(e.target.value)}
                             />
                         </div>
                         <div className="outgoings_section">
@@ -243,7 +247,7 @@ export default function Home() {
                             <input
                                 type="number"
                                 min="0"
-                                onChange={e => setCreditors(e.target.value)}
+                                onChange={(e) => setCreditors(e.target.value)}
                             />
                         </div>
                         <div className="outgoings_section">
@@ -251,7 +255,7 @@ export default function Home() {
                             <input
                                 type="number"
                                 min="0"
-                                onChange={e =>
+                                onChange={(e) =>
                                     setOtherOutgoings(e.target.value)
                                 }
                             />
@@ -261,7 +265,8 @@ export default function Home() {
                         <Button
                             variant="contained"
                             className="submit_btn"
-                            onClick={handleSubmit}>
+                            onClick={handleSubmit}
+                        >
                             Submit
                         </Button>
                     ) : (

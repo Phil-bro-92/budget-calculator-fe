@@ -19,7 +19,7 @@ export default function Login() {
     const handleLogin = () => {
         let data = {
             email: email,
-            password: password
+            password: password,
         };
 
         if (email === "" || password === "") {
@@ -39,7 +39,7 @@ export default function Login() {
         } else {
             axios
                 .post(`${url}/login`, data)
-                .then(res => {
+                .then((res) => {
                     console.log(res.data);
                     const user = JSON.stringify(res.data.user);
                     const token = res.data.token;
@@ -47,9 +47,15 @@ export default function Login() {
                     localStorage.setItem("token", token);
                     navigate("/");
                 })
-                .catch(err => {
+                .catch((err) => {
                     console.log(err);
                 });
+        }
+    };
+
+    const handleEnterPress = (event) => {
+        if (event.key === "Enter") {
+            handleLogin();
         }
     };
 
@@ -63,15 +69,16 @@ export default function Login() {
                 type="email"
                 label="Email"
                 variant="filled"
-                onChange={e => setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
+                onKeyDown={(e) => handleEnterPress(e)}
             />
             <TextField
                 className="input_field"
-                s
                 type="password"
                 label="Password"
                 variant="filled"
-                onChange={e => setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
+                onKeyDown={(e) => handleEnterPress(e)}
             />
 
             {!alert ? (
