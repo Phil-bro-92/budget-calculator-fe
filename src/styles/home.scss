@@ -3,6 +3,11 @@
 .home {
     background-color: $background;
     padding: 0 5%;
+    height: 170vh;
+
+    h1 {
+        padding-top: 20px;
+    }
 
     .currency {
         @include flex($justify: "space-evenly");
@@ -34,11 +39,17 @@
 
     .input_field_name {
         margin: 20px 0;
-        width: 95%;
+        width: 100%;
     }
 
     .input_field {
-        margin: 10px 0;
-        width: 95%;
+        margin: 10px auto;
+        width: 100%;
+    }
+
+    .alert {
+        font-size: 2rem;
+        color: $primary;
+        text-align: center;
     }
 }

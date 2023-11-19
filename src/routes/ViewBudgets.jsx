@@ -10,6 +10,7 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import { Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { PieChart } from "@mui/x-charts/PieChart";
 
 export default function ViewBudgets() {
     const navigate = useNavigate();
@@ -24,6 +25,7 @@ export default function ViewBudgets() {
         if (user) {
             setCustomer(user);
         }
+        window.scroll(0, 0);
     }, []);
 
     const handleSelectedBudget = (id) => {
@@ -57,11 +59,12 @@ export default function ViewBudgets() {
     };
 
     const handleDeleteBudget = () => {
-        //TODO: Delete budget by id
         axios
             .delete(`${url}/delete/${customer._id}/${selectedBudget.id}`)
             .then((res) => {
-                console.log(res);
+                localStorage.setItem("customer", JSON.stringify(res.data));
+                setCustomer(res.data);
+                setSelectedBudget({});
             })
             .catch((err) => {
                 console.log(err);
@@ -102,7 +105,7 @@ export default function ViewBudgets() {
                                 </Select>
                             </FormControl>
                             <Button
-                                variant="contained"
+                                variant="outlined"
                                 color="error"
                                 onClick={handleDeleteBudget}
                             >
@@ -119,75 +122,180 @@ export default function ViewBudgets() {
                 )}
 
                 {Object.keys(selectedBudget).length > 0 ? (
-                    <table>
-                        <thead>
-                            <th colSpan={2}>{selectedBudget.name}</th>
-                        </thead>
+                    <>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th colSpan={2}>{selectedBudget.name}</th>
+                                </tr>
+                            </thead>
 
-                        <tbody>
-                            <tr>
-                                {" "}
-                                <th colSpan={2}>Income</th>
-                            </tr>
-                            <tr>
-                                <th>Main</th>
-                                <td>£ {selectedBudget.income}</td>
-                            </tr>
-                            <tr>
-                                <th>Other</th>
-                                <td>£{selectedBudget.otherIncome}</td>
-                            </tr>
-                            <tr>
-                                <th>Total</th>
-                                <td>£{totalIncome}</td>
-                            </tr>
-                            <tr>
-                                <th colSpan={2}>Outgoings</th>
-                            </tr>
-                            <tr>
-                                <th>Mortgage/Rent</th>
-                                <td>£{selectedBudget.mortgage}</td>
-                            </tr>
-                            <tr>
-                                <th>Car</th>
-                                <td>£{selectedBudget.car}</td>
-                            </tr>
-                            <tr>
-                                <th>Taxes</th>
-                                <td>£{selectedBudget.taxes}</td>
-                            </tr>
-                            <tr>
-                                <th>Food/Essentials</th>
-                                <td>£{selectedBudget.food}</td>
-                            </tr>
-                            <tr>
-                                <th>Insurance</th>
-                                <td>£{selectedBudget.insurance}</td>
-                            </tr>
-                            <tr>
-                                <th>Creditors</th>
-                                <td>£{selectedBudget.creditors}</td>
-                            </tr>
-                            <tr>
-                                <th>Other</th>
-                                <td>£{selectedBudget.otherOutgoings}</td>
-                            </tr>
-                            <tr>
-                                <th>Total</th>
-                                <td>£{totalOutgoings}</td>
-                            </tr>
-                            <tr>
-                                <th colSpan={2}>Disposable/Savings</th>
-                            </tr>
-                            <tr>
-                                <th colSpan={2}>
-                                    £{totalIncome - totalOutgoings}
-                                </th>
-                            </tr>
-                        </tbody>
-                    </table>
+                            <tbody>
+                                <tr>
+                                    {" "}
+                                    <th colSpan={2}>Income</th>
+                                </tr>
+                                <tr>
+                                    <th>Main</th>
+                                    <td>
+                                        {selectedBudget.currency}{" "}
+                                        {selectedBudget.income}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Other</th>
+                                    <td>
+                                        {" "}
+                                        {selectedBudget.currency}{" "}
+                                        {selectedBudget.otherIncome}
+                                    </td>
+                                </tr>
+                                <tr className="total">
+                                    <th>Total</th>
+                                    <th>
+                                        {" "}
+                                        {selectedBudget.currency} {totalIncome}
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th colSpan={2}>Outgoings</th>
+                                </tr>{" "}
+                                <PieChart
+                                    series={[
+                                        {
+                                            data: [
+                                                {
+                                                    id: 0,
+                                                    value: selectedBudget.mortgage,
+                                                    label: "Mortgage/rent",
+                                                },
+                                                {
+                                                    id: 1,
+                                                    value: selectedBudget.car,
+                                                    label: "Car",
+                                                },
+                                                {
+                                                    id: 2,
+                                                    value: selectedBudget.taxes,
+                                                    label: "Taxes",
+                                                },
+                                                {
+                                                    id: 3,
+                                                    value: selectedBudget.media,
+                                                    label: "Media",
+                                                },
+                                                {
+                                                    id: 4,
+                                                    value: selectedBudget.food,
+                                                    label: "Food",
+                                                },
+                                                {
+                                                    id: 5,
+                                                    value: selectedBudget.insurance,
+                                                    label: "Insurance",
+                                                },
+                                                {
+                                                    id: 6,
+                                                    value: selectedBudget.creditors,
+                                                    label: "Creditors",
+                                                },
+                                                {
+                                                    id: 7,
+                                                    value: selectedBudget.otherOutgoings,
+                                                    label: "Other outgoings",
+                                                },
+                                            ],
+                                        },
+                                    ]}
+                                    slotProps={{
+                                        legend: { hidden: true },
+                                    }}
+                                    width={200}
+                                    height={200}
+                                    margin={{
+                                        left: 40,
+                                        right: 0,
+                                        top: 0,
+                                        bottom: 0,
+                                    }}
+                                />
+                                <tr>
+                                    <th>Mortgage/Rent</th>
+                                    <td>
+                                        {" "}
+                                        {selectedBudget.currency}{" "}
+                                        {selectedBudget.mortgage}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Car</th>
+                                    <td>
+                                        {" "}
+                                        {selectedBudget.currency}{" "}
+                                        {selectedBudget.car}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Taxes</th>
+                                    <td>
+                                        {" "}
+                                        {selectedBudget.currency}{" "}
+                                        {selectedBudget.taxes}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Food/Essentials</th>
+                                    <td>
+                                        {" "}
+                                        {selectedBudget.currency}{" "}
+                                        {selectedBudget.food}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Insurance</th>
+                                    <td>
+                                        {" "}
+                                        {selectedBudget.currency}{" "}
+                                        {selectedBudget.insurance}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Creditors</th>
+                                    <td>
+                                        {" "}
+                                        {selectedBudget.currency}{" "}
+                                        {selectedBudget.creditors}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Other</th>
+                                    <td>
+                                        {" "}
+                                        {selectedBudget.currency}{" "}
+                                        {selectedBudget.otherOutgoings}
+                                    </td>
+                                </tr>
+                                <tr className="total">
+                                    <th>Total</th>
+                                    <th>
+                                        {" "}
+                                        {selectedBudget.currency}{" "}
+                                        {totalOutgoings}
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th colSpan={2}>Disposable/Savings</th>
+                                </tr>
+                                <tr>
+                                    <th colSpan={2}>
+                                        {selectedBudget.currency}{" "}
+                                        {totalIncome - totalOutgoings}
+                                    </th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </>
                 ) : null}
-                <section></section>
             </main>
         </>
     );

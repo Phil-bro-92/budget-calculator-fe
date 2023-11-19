@@ -3,6 +3,7 @@ import Login from "./routes/Login";
 import Register from "./routes/Register";
 import Home from "./routes/Home";
 import ViewBudgets from "./routes/ViewBudgets";
+import Account from "./routes/Account";
 import ProtectedRoute from "./routes/ProtectedRoute";
 
 export default function App() {
@@ -24,6 +25,14 @@ export default function App() {
                     element={
                         <ProtectedRoute>
                             <ViewBudgets />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/account"
+                    element={
+                        <ProtectedRoute>
+                            <Account />
                         </ProtectedRoute>
                     }
                 />

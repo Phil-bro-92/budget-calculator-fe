@@ -26,18 +26,18 @@ export default function Home() {
     const [name, setName] = useState("");
 
     //Income
-    const [income, setIncome] = useState(0);
-    const [otherIncome, setOtherIncome] = useState(0);
+    const [income, setIncome] = useState("");
+    const [otherIncome, setOtherIncome] = useState("");
 
     //Outgoings
-    const [mortgage, setMortgage] = useState(0);
-    const [car, setCar] = useState(0);
-    const [taxes, setTaxes] = useState(0);
-    const [media, setMedia] = useState(0);
-    const [food, setFood] = useState(0);
-    const [insurance, setInsurance] = useState(0);
-    const [creditors, setCreditors] = useState(0);
-    const [otherOutgoings, setOtherOutgoings] = useState(0);
+    const [mortgage, setMortgage] = useState("");
+    const [car, setCar] = useState("");
+    const [taxes, setTaxes] = useState("");
+    const [media, setMedia] = useState("");
+    const [food, setFood] = useState("");
+    const [insurance, setInsurance] = useState("");
+    const [creditors, setCreditors] = useState("");
+    const [otherOutgoings, setOtherOutgoings] = useState("");
 
     //Alerts
     const [message, setMessage] = useState({});
@@ -87,14 +87,30 @@ export default function Home() {
                 setMessage("");
             }, 3000);
         } else if (name === "") {
-            setMessage("You must provide a name for your budget");
+            setMessage("Please provide a name for your budget");
             setAlert(true);
             setTimeout(() => {
                 setAlert(false);
                 setMessage("");
             }, 3000);
-        } else if (income === 0 || income === "") {
-            setMessage("You must provide an income before proceeding");
+        } else if (income === "" || otherIncome === "") {
+            setMessage("Please complete income fields");
+            setAlert(true);
+            setTimeout(() => {
+                setAlert(false);
+                setMessage("");
+            }, 3000);
+        } else if (
+            mortgage === "" ||
+            car === "" ||
+            taxes === "" ||
+            media === "" ||
+            food === "" ||
+            insurance === "" ||
+            creditors === "" ||
+            otherOutgoings === ""
+        ) {
+            setMessage("Please complete outgoing fields");
             setAlert(true);
             setTimeout(() => {
                 setAlert(false);
@@ -103,7 +119,7 @@ export default function Home() {
         } else {
             let data = {
                 name: name,
-                currency: selectedCurrency,
+                currency: currencyIcon,
                 period: selectedTime,
                 income: income,
                 otherIncome: otherIncome,
@@ -135,8 +151,15 @@ export default function Home() {
         <>
             <Nav />
             <main className="home">
-                <h1>Hi, {customer.first_name}! </h1>
-                <h2>Let's sort your budget </h2>
+                <h1>
+                    Hi,{" "}
+                    {customer.first_name &&
+                        customer.first_name.charAt(0).toUpperCase() +
+                            customer.first_name.slice(1)}
+                    , let's sort your budget!
+                </h1>
+                <h2> </h2>
+                <h3>Pick a currency</h3>
                 <section className="currency">
                     <Button
                         className={
@@ -198,7 +221,7 @@ export default function Home() {
                     variant="outlined"
                 />
 
-                <FormControl sx={{ width: "95%" }}>
+                <FormControl sx={{ width: "100%" }}>
                     <InputLabel>What period is your budget for?</InputLabel>
                     <Select
                         label="What period is you budget for?"
@@ -210,182 +233,183 @@ export default function Home() {
                         <MenuItem value="Annually">Annually</MenuItem>
                     </Select>
                 </FormControl>
-                <section className="income">
-                    <h2>Income</h2>
+                {selectedCurrency && selectedTime && name && (
+                    <section className="income_outgoing">
+                        <h2>Income</h2>
 
-                    <TextField
-                        className="input_field"
-                        type="number"
-                        min="0"
-                        onChange={(e) => setIncome(e.target.value)}
-                        label="Main salary"
-                        variant="outlined"
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    {currencyIcon}
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
-                    <TextField
-                        className="input_field"
-                        type="number"
-                        min="0"
-                        onChange={(e) => setOtherIncome(e.target.value)}
-                        label="Other income"
-                        variant="outlined"
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    {currencyIcon}
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
-                </section>
-                <section className="outgoings">
-                    <h2>Outgoings</h2>
+                        <TextField
+                            className="input_field"
+                            type="number"
+                            min="0"
+                            onChange={(e) => setIncome(e.target.value)}
+                            label="Main salary"
+                            variant="outlined"
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        {currencyIcon}
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                        <TextField
+                            className="input_field"
+                            type="number"
+                            min="0"
+                            onChange={(e) => setOtherIncome(e.target.value)}
+                            label="Other income"
+                            variant="outlined"
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        {currencyIcon}
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
 
-                    <TextField
-                        className="input_field"
-                        type="number"
-                        min="0"
-                        onChange={(e) => setMortgage(e.target.value)}
-                        label="Mortgage/Rent"
-                        variant="outlined"
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    {currencyIcon}
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
-                    <TextField
-                        className="input_field"
-                        type="number"
-                        min="0"
-                        onChange={(e) => setCar(e.target.value)}
-                        label="Car"
-                        variant="outlined"
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    {currencyIcon}
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
-                    <TextField
-                        className="input_field"
-                        type="number"
-                        min="0"
-                        onChange={(e) => setTaxes(e.target.value)}
-                        label="Taxes"
-                        variant="outlined"
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    {currencyIcon}
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
-                    <TextField
-                        className="input_field"
-                        type="number"
-                        min="0"
-                        onChange={(e) => setMedia(e.target.value)}
-                        label="TV/Media"
-                        variant="outlined"
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    {currencyIcon}
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
-                    <TextField
-                        className="input_field"
-                        type="number"
-                        min="0"
-                        onChange={(e) => setFood(e.target.value)}
-                        label="Food/Essentials"
-                        variant="outlined"
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    {currencyIcon}
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
-                    <TextField
-                        className="input_field"
-                        type="number"
-                        min="0"
-                        onChange={(e) => setInsurance(e.target.value)}
-                        label="Insurance"
-                        variant="outlined"
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    {currencyIcon}
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
-                    <TextField
-                        className="input_field"
-                        type="number"
-                        min="0"
-                        onChange={(e) => setCreditors(e.target.value)}
-                        label="Creditors"
-                        variant="outlined"
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    {currencyIcon}
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
-                    <TextField
-                        className="input_field"
-                        type="number"
-                        min="0"
-                        onChange={(e) => setOtherOutgoings(e.target.value)}
-                        label="Other Outgoings"
-                        variant="outlined"
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    {currencyIcon}
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
-                </section>
-                {!alert ? (
-                    <Button
-                        sx={{ width: "95%", margin: "30px 0" }}
-                        variant="contained"
-                        className="submit_btn"
-                        onClick={handleSubmit}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    {currencyIcon}
-                                </InputAdornment>
-                            ),
-                        }}
-                    >
-                        Create budget
-                    </Button>
-                ) : (
-                    <p>{message}</p>
+                        <h2>Outgoings</h2>
+
+                        <TextField
+                            className="input_field"
+                            type="number"
+                            min="0"
+                            onChange={(e) => setMortgage(e.target.value)}
+                            label="Mortgage/Rent"
+                            variant="outlined"
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        {currencyIcon}
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                        <TextField
+                            className="input_field"
+                            type="number"
+                            min="0"
+                            onChange={(e) => setCar(e.target.value)}
+                            label="Car"
+                            variant="outlined"
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        {currencyIcon}
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                        <TextField
+                            className="input_field"
+                            type="number"
+                            min="0"
+                            onChange={(e) => setTaxes(e.target.value)}
+                            label="Taxes"
+                            variant="outlined"
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        {currencyIcon}
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                        <TextField
+                            className="input_field"
+                            type="number"
+                            min="0"
+                            onChange={(e) => setMedia(e.target.value)}
+                            label="TV/Media"
+                            variant="outlined"
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        {currencyIcon}
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                        <TextField
+                            className="input_field"
+                            type="number"
+                            min="0"
+                            onChange={(e) => setFood(e.target.value)}
+                            label="Food/Essentials"
+                            variant="outlined"
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        {currencyIcon}
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                        <TextField
+                            className="input_field"
+                            type="number"
+                            min="0"
+                            onChange={(e) => setInsurance(e.target.value)}
+                            label="Insurance"
+                            variant="outlined"
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        {currencyIcon}
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                        <TextField
+                            className="input_field"
+                            type="number"
+                            min="0"
+                            onChange={(e) => setCreditors(e.target.value)}
+                            label="Creditors"
+                            variant="outlined"
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        {currencyIcon}
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                        <TextField
+                            className="input_field"
+                            type="number"
+                            min="0"
+                            onChange={(e) => setOtherOutgoings(e.target.value)}
+                            label="Other Outgoings"
+                            variant="outlined"
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        {currencyIcon}
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                        {!alert ? (
+                            <Button
+                                sx={{ width: "100%", margin: "30px 0" }}
+                                variant="contained"
+                                className="submit_btn"
+                                onClick={handleSubmit}
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            {currencyIcon}
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            >
+                                Create budget
+                            </Button>
+                        ) : (
+                            <p className="alert">{message}</p>
+                        )}
+                    </section>
                 )}
             </main>
         </>
