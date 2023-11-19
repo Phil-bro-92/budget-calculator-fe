@@ -1,6 +1,22 @@
 @import "./variables.scss";
 
 .view_budgets {
+    background-color: $background;
+    padding: 3%;
+    h1 {
+        text-align: center;
+    }
+
+    .no_budgets {
+        text-align: center;
+        font-size: 2rem;
+        padding: 2%;
+
+        span {
+            color: $primary;
+            text-decoration: underline;
+        }
+    }
     table {
         width: 95%;
         margin: 0 auto;

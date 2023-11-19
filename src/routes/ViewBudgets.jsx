@@ -1,5 +1,7 @@
 import "../styles/viewbudget.scss";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import Nav from "../components/Nav";
 import Select from "@mui/material/Select";
 import Box from "@mui/material/Box";
@@ -10,6 +12,8 @@ import { Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function ViewBudgets() {
+    const navigate = useNavigate();
+    const url = process.env.REACT_APP_API_URL;
     const [customer, setCustomer] = useState({});
     const [selectedBudget, setSelectedBudget] = useState({});
     const [totalIncome, setTotalIncome] = useState("");
@@ -19,9 +23,6 @@ export default function ViewBudgets() {
         const user = JSON.parse(localStorage.getItem("customer"));
         if (user) {
             setCustomer(user);
-            if (user.budgets.length > 0) {
-                setSelectedBudget(user.budgets[user.budgets.length - 1]);
-            }
         }
     }, []);
 
@@ -56,53 +57,66 @@ export default function ViewBudgets() {
     };
 
     const handleDeleteBudget = () => {
-    //TODO: Delete budget by id
-    }
+        //TODO: Delete budget by id
+        axios
+            .delete(`${url}/delete/${customer._id}/${selectedBudget.id}`)
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
 
     return (
         <>
             <Nav />
             <main className="view_budgets">
-                <Box
-                    sx={{
-                        display: "flex",
-                        justifyContent: "space-evenly",
-                        width: "95%",
-                        margin: "20px auto",
-                        minWidth: 120,
-                    }}
-                >
-                    <FormControl sx={{ width: "80%" }}>
-                        <InputLabel id="demo-simple-select-label">
-                            Budgets
-                        </InputLabel>
-                        {customer.budgets && customer.budgets.length !== 0 ? (
-                            <Select
-                                label="Budget"
-                                onChange={(e) =>
-                                    handleSelectedBudget(e.target.value)
-                                }
+                {customer.budgets && customer.budgets.length !== 0 ? (
+                    <>
+                        <h1>Select a budget</h1>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                justifyContent: "space-evenly",
+                                width: "95%",
+                                margin: "20px auto",
+                                minWidth: 120,
+                            }}
+                        >
+                            <FormControl sx={{ width: "80%" }}>
+                                <InputLabel>Budgets</InputLabel>
+                                <Select
+                                    label="Budget"
+                                    onChange={(e) =>
+                                        handleSelectedBudget(e.target.value)
+                                    }
+                                >
+                                    {customer.budgets.map((budget, i) => {
+                                        return (
+                                            <MenuItem key={i} value={budget.id}>
+                                                {budget.name}
+                                            </MenuItem>
+                                        );
+                                    })}
+                                </Select>
+                            </FormControl>
+                            <Button
+                                variant="contained"
+                                color="error"
+                                onClick={handleDeleteBudget}
                             >
-                                {customer.budgets.map((budget, i) => {
-                                    return (
-                                        <MenuItem key={i} value={budget.id}>
-                                            {budget.name}
-                                        </MenuItem>
-                                    );
-                                })}
-                            </Select>
-                        ) : (
-                            <p>You have no budgets</p>
-                        )}
-                    </FormControl>
-                    <Button
-                        variant="contained"
-                        color="error"
-                        onClick={handleDeleteBudget}
-                    >
-                        <DeleteIcon />
-                    </Button>
-                </Box>
+                                <DeleteIcon />
+                            </Button>
+                        </Box>
+                    </>
+                ) : (
+                    <p className="no_budgets">
+                        You haven't created any budgets yet. Head{" "}
+                        <span onClick={() => navigate("/")}>here</span> to make
+                        one!
+                    </p>
+                )}
 
                 {Object.keys(selectedBudget).length > 0 ? (
                     <table>

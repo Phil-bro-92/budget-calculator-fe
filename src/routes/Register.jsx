@@ -120,7 +120,7 @@ export default function Register() {
                 min="0"
                 onChange={(e) => setPhone(e.target.value)}
                 onKeyDown={(e) => handleEnterPress(e)}
-                label="Phone"
+                label="Phone (Optional)"
                 variant="filled"
             />
             <TextField

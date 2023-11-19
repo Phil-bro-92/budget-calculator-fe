@@ -1,131 +1,44 @@
 @import "./variables.scss";
 
 .home {
-  background-color: $background;
-  padding: 0 5%;
+    background-color: $background;
+    padding: 0 5%;
 
-  h1 {
-    padding-top: 10px;
-  }
+    .currency {
+        @include flex($justify: "space-evenly");
 
-  h2 {
-    font-size: 1rem;
-  }
-
-  .currency {
-    @include flex($justify: "space-evenly");
-
-    .pound,
-    .dollar,
-    .euro,
-    .yen {
-      width: 21.25%;
-      margin: 0;
-      padding: 1% 0;
-      color: #000;
-    }
-
-    .dollar {
-      margin: 0 2% 0 5%;
-    }
-
-    .euro {
-      margin: 0 5% 0 3%;
-    }
-  }
-
-  .selected_currency {
-    text-align: center;
-
-    span {
-      color: $primary;
-    }
-  }
-
-  .time {
-    background-color: $primary;
-    padding: 0 3% 3% 3%;
-    border-radius: 8px;
-
-    select {
-      padding: 2px;
-      width: 100%;
-      border-radius: 4px;
-      font-size: 1rem;
-    }
-  }
-
-  .name {
-    @include flex($direction: column,
-      $justify: flex-start,
-      $align: flex-start);
-    margin: 5px 0;
-    padding: 0 3% 3% 3%;
-    border-radius: 8px;
-    background-color: $accent;
-    color: $text;
-
-    label {
-      font-size: 1.1rem;
-      font-weight: 700;
-      padding: 5px 0;
-    }
-
-    input {
-      padding: 2px;
-      width: 95%;
-      border-radius: 4px;
-      margin: 0 auto;
-      font-size: 1rem
-    }
-  }
-
-  .budget_form {
-
-    .income,
-    .outgoings {
-
-      .income_section,
-      .outgoings_section {
-        @include flex($direction: column,
-          $justify: flex-start,
-          $align: flex-start);
-        margin: 5px 0;
-        padding: 0 3% 3% 3%;
-        border-radius: 8px;
-
-        label {
-          font-size: 1.1rem;
-          font-weight: 700;
-          padding: 5px 0;
+        .pound,
+        .dollar,
+        .euro,
+        .yen,
+        .selected_currency {
+            width: 21.25%;
+            height: 40px;
+            margin: 0;
+            padding: 1% 0;
         }
 
-        input {
-          padding: 2px;
-          width: 95%;
-          border-radius: 4px;
-          margin: 0 auto;
-          font-size: 1rem;
+        .dollar {
+            margin: 0 2% 0 5%;
         }
-      }
+
+        .euro {
+            margin: 0 5% 0 3%;
+        }
     }
 
-    .income {
-      .income_section {
-        background-color: $secondary;
-      }
+    .selected_currency {
+        border: 3px solid $secondary;
+        color: #000;
     }
 
-    .outgoings {
-      .outgoings_section {
-        background-color: $accent;
-        color: $text;
-      }
+    .input_field_name {
+        margin: 20px 0;
+        width: 95%;
     }
 
-    .submit_btn {
-      width: 100%;
-      margin: 30px 0;
+    .input_field {
+        margin: 10px 0;
+        width: 95%;
     }
-  }
 }
