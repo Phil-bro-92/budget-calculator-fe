@@ -10,6 +10,13 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { Button } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import { Divider } from "@mui/material";
+
+//Styling
+const menuMargin = {
+    marginRight: "12px",
+    color: "rgb(71, 110, 158)",
+};
 
 export default function Nav() {
     const navigate = useNavigate();
@@ -106,34 +113,37 @@ export default function Nav() {
                                 handleClose();
                             }}
                         >
-                            <CottageIcon />
-                            Home
+                            <CottageIcon sx={menuMargin} /> Home
                         </MenuItem>
+                        <Divider />
                         <MenuItem
                             onClick={() => {
                                 navigate("/view-budgets");
                                 handleClose();
                             }}
                         >
-                            <BarChartIcon />
+                            <BarChartIcon sx={menuMargin} />
                             Budgets
                         </MenuItem>
+                        <Divider />
                         <MenuItem
                             onClick={() => {
                                 navigate("/account");
                                 handleClose();
                             }}
                         >
-                            <AccountCircleIcon />
+                            <AccountCircleIcon sx={menuMargin} />
                             Account
                         </MenuItem>
+
+                        <Divider />
                         <MenuItem
                             onClick={() => {
                                 handleLogout();
                                 handleClose();
                             }}
                         >
-                            <ExitToAppIcon />
+                            <ExitToAppIcon sx={menuMargin} />
                             Logout
                         </MenuItem>
                     </Menu>

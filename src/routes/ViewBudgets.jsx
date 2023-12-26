@@ -10,7 +10,11 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import { Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { PieChart } from "@mui/x-charts/PieChart";
+import PieChartIcon from "@mui/icons-material/PieChart";
+import DeleteCheckModal from "../components/DeleteCheckModal";
+
+import Modal from "@mui/material/Modal";
+import GraphModal from "../components/GraphModal";
 
 export default function ViewBudgets() {
     const navigate = useNavigate();
@@ -19,6 +23,8 @@ export default function ViewBudgets() {
     const [selectedBudget, setSelectedBudget] = useState({});
     const [totalIncome, setTotalIncome] = useState("");
     const [totalOutgoings, setTotalOutgoings] = useState("");
+    const [open, setOpen] = useState(false);
+    const [openCheck, setOpenCheck] = useState(false);
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("customer"));
@@ -104,20 +110,37 @@ export default function ViewBudgets() {
                                     })}
                                 </Select>
                             </FormControl>
-                            <Button
-                                variant="outlined"
-                                color="error"
-                                onClick={handleDeleteBudget}
-                            >
-                                <DeleteIcon />
-                            </Button>
+                            {Object.keys(selectedBudget).length > 0 && (
+                                <>
+                                    <Button
+                                        variant="contained"
+                                        color="secondary"
+                                        onClick={() => setOpen(true)}
+                                    >
+                                        <PieChartIcon />
+                                    </Button>
+
+                                    <Button
+                                        variant="contained"
+                                        color="error"
+                                        onClick={() => setOpenCheck(true)}
+                                    >
+                                        <DeleteIcon />
+                                    </Button>
+                                </>
+                            )}
                         </Box>
                     </>
                 ) : (
                     <p className="no_budgets">
                         You haven't created any budgets yet. Head{" "}
-                        <span onClick={() => navigate("/")}>here</span> to make
-                        one!
+                        <span
+                            style={{ cursor: "pointer" }}
+                            onClick={() => navigate("/")}
+                        >
+                            here
+                        </span>{" "}
+                        to make one!
                     </p>
                 )}
 
@@ -160,65 +183,6 @@ export default function ViewBudgets() {
                                 <tr>
                                     <th colSpan={2}>Outgoings</th>
                                 </tr>{" "}
-                                <PieChart
-                                    series={[
-                                        {
-                                            data: [
-                                                {
-                                                    id: 0,
-                                                    value: selectedBudget.mortgage,
-                                                    label: "Mortgage/rent",
-                                                },
-                                                {
-                                                    id: 1,
-                                                    value: selectedBudget.car,
-                                                    label: "Car",
-                                                },
-                                                {
-                                                    id: 2,
-                                                    value: selectedBudget.taxes,
-                                                    label: "Taxes",
-                                                },
-                                                {
-                                                    id: 3,
-                                                    value: selectedBudget.media,
-                                                    label: "Media",
-                                                },
-                                                {
-                                                    id: 4,
-                                                    value: selectedBudget.food,
-                                                    label: "Food",
-                                                },
-                                                {
-                                                    id: 5,
-                                                    value: selectedBudget.insurance,
-                                                    label: "Insurance",
-                                                },
-                                                {
-                                                    id: 6,
-                                                    value: selectedBudget.creditors,
-                                                    label: "Creditors",
-                                                },
-                                                {
-                                                    id: 7,
-                                                    value: selectedBudget.otherOutgoings,
-                                                    label: "Other outgoings",
-                                                },
-                                            ],
-                                        },
-                                    ]}
-                                    slotProps={{
-                                        legend: { hidden: true },
-                                    }}
-                                    width={200}
-                                    height={200}
-                                    margin={{
-                                        left: 40,
-                                        right: 0,
-                                        top: 0,
-                                        bottom: 0,
-                                    }}
-                                />
                                 <tr>
                                     <th>Mortgage/Rent</th>
                                     <td>
@@ -297,6 +261,16 @@ export default function ViewBudgets() {
                     </>
                 ) : null}
             </main>
+            <Modal open={open}>
+                <GraphModal setOpen={setOpen} selectedBudget={selectedBudget} />
+            </Modal>
+            <Modal open={openCheck}>
+                <DeleteCheckModal
+                    handleDeleteBudget={handleDeleteBudget}
+                    setOpenCheck={setOpenCheck}
+                    name={selectedBudget.name}
+                />
+            </Modal>
         </>
     );
 }

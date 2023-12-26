@@ -1,2 +1,22 @@
-@import './variables.scss';
+@import "./variables.scss";
 
+.account {
+    padding: 0 5% 5%;
+    background-color: $secondary;
+
+    h1 {
+        padding-top: 20px;
+    }
+
+    .input_field {
+        margin: 10px auto;
+        width: 100%;
+    }
+
+    .btns {
+        @include flex($justify: space-between);
+        button {
+            width: 45%;
+        }
+    }
+}

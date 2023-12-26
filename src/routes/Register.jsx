@@ -44,6 +44,22 @@ export default function Register() {
                 setAlert(false);
                 setMessage("");
             }, 3000);
+        } else if (!email.match(regexPatterns.email)) {
+            setMessage("Please enter a valid email address");
+            setAlert(true);
+            setTimeout(() => {
+                setAlert(false);
+                setMessage("");
+            }, 3000);
+        } else if (phone && !phone.match(regexPatterns.phone)) {
+            setMessage(
+                "If entering a phone number please provide a valid number"
+            );
+            setAlert(true);
+            setTimeout(() => {
+                setAlert(false);
+                setMessage("");
+            }, 3000);
         } else if (!password.match(regexPatterns.password)) {
             setMessage(
                 "Password must be at least 8 characters long and contain at least one uppercase, lowercase, number an special character"
@@ -85,7 +101,7 @@ export default function Register() {
             handleRegister();
         }
     };
-    
+
     return (
         <main className="register">
             <img src={Logo} alt="main logo" />
