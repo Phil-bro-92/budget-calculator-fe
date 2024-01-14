@@ -5,13 +5,18 @@ import Home from "./routes/Home";
 import ViewBudgets from "./routes/ViewBudgets";
 import Account from "./routes/Account";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import ForgotPassword from "./routes/ForgotPassword";
 
 export default function App() {
     return (
         <Router>
             <Routes>
                 <Route path="/login" element={<Login />} />
-                <Route path="register" element={<Register />} />
+                <Route path="/register" element={<Register />} />
+                <Route
+                    path="/forgot-password"
+                    element={<ForgotPassword />}
+                ></Route>
                 <Route
                     path="/"
                     element={

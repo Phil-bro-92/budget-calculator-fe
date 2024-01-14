@@ -1,17 +1,29 @@
-@import './variables.scss';
+@import "./variables.scss";
 
 .login,
 .register {
     @include flex($direction: column);
+    margin-bottom: 50px;
+    .main_logo {
+        margin-top: 50px;
+        width: 80%;
+        max-width: 400px;
+    }
+
+    p {
+        text-align: center;
+    }
 
     .input_field {
         margin: 10px 0;
         width: 80%;
+        max-width: 400px;
     }
 
     button {
         margin-top: 30px;
         width: 80%;
+        max-width: 400px;
     }
 
     span {

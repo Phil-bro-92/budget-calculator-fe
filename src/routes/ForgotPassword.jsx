@@ -2,30 +2,28 @@ import axios from "axios";
 import { useState } from "react";
 import { Button } from "@mui/material";
 import regexPatterns from "../utils/regex";
-import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Logo from "../assets/budget-logo.png";
 import Alert from "@mui/material/Alert";
+import { useNavigate } from "react-router-dom";
 
-export default function Login() {
+export default function ForgotPassword() {
     const navigate = useNavigate();
     const url = process.env.REACT_APP_API_URL;
     const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
 
     //Alerts
     const [alert, setAlert] = useState("");
     const [message, setMessage] = useState("");
     const [severity, setSeverity] = useState("");
 
-    const handleLogin = () => {
+    const handleForgotPassword = () => {
         let data = {
             email: email,
-            password: password,
         };
 
-        if (email === "" || password === "") {
-            setMessage("Please complete all required fields");
+        if (email === "") {
+            setMessage("Please enter your email address");
             setSeverity("warning");
             setAlert(true);
             setTimeout(() => {
@@ -44,73 +42,50 @@ export default function Login() {
             }, 3000);
         } else {
             axios
-                .post(`${url}/login`, data)
+                .post(`${url}/password_reset`, data)
                 .then((res) => {
                     console.log(res.data);
-                    const user = JSON.stringify(res.data.user);
-                    const token = res.data.token;
-                    localStorage.setItem("customer", user);
-                    localStorage.setItem("token", token);
-                    navigate("/");
                 })
                 .catch((err) => {
                     console.log(err);
-                    setMessage("Something went wrong - Please try again");
-                    setSeverity("error");
-                    setAlert(true);
-                    setTimeout(() => {
-                        setAlert(false);
-                        setMessage("");
-                        setSeverity("");
-                    }, 3000);
                 });
         }
     };
 
     const handleEnterPress = (event) => {
         if (event.key === "Enter") {
-            handleLogin();
+            handleForgotPassword();
         }
     };
 
     return (
         <main className="login">
             <img src={Logo} alt="main logo" className="main_logo" />
-            <h1>Login</h1>
+            <h1>Forgot Password?</h1>
+            <p>
+                Please enter your email and we will send you a password reset
+                email.
+            </p>
 
-            <TextField
-                className="input_field"
-                type="email"
-                label="Email"
-                variant="filled"
-                onChange={(e) => setEmail(e.target.value)}
-                onKeyDown={(e) => handleEnterPress(e)}
-            />
             <TextField
                 className="input_field"
                 type="password"
                 label="Password"
                 variant="filled"
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
                 onKeyDown={(e) => handleEnterPress(e)}
             />
 
             {!alert ? (
-                <Button variant="contained" onClick={handleLogin}>
-                    Login
+                <Button variant="contained" onClick={handleForgotPassword}>
+                    Reset Password
                 </Button>
             ) : (
                 <Alert severity={severity} variant="filled">
                     {message}
                 </Alert>
             )}
-            <p>
-                Don't have an account? Register{" "}
-                <span onClick={() => navigate("/register")}>here</span>
-            </p>
-            <p onClick={() => navigate("/forgot-password")}>
-                Forgot your password?
-            </p>
+            <p onClick={() => navigate("/login")}>Back to login?</p>
         </main>
     );
 }

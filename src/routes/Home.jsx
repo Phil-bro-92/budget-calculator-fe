@@ -14,6 +14,7 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
+import Alert from "@mui/material/Alert";
 
 export default function Home() {
     const navigate = useNavigate();
@@ -42,6 +43,7 @@ export default function Home() {
     //Alerts
     const [message, setMessage] = useState({});
     const [alert, setAlert] = useState(false);
+    const [severity, setSeverity] = useState("");
 
     //Get customer info
     useEffect(() => {
@@ -74,30 +76,38 @@ export default function Home() {
     const handleSubmit = () => {
         if (selectedCurrency === "") {
             setMessage("You must provide a currency type before proceeding");
+            setSeverity("warning");
             setAlert(true);
             setTimeout(() => {
                 setAlert(false);
+                setSeverity("");
                 setMessage("");
             }, 3000);
         } else if (selectedTime === "" || selectedTime === "Please select") {
             setMessage("You must provide a time period before proceeding");
+            setSeverity("warning");
             setAlert(true);
             setTimeout(() => {
                 setAlert(false);
+                setSeverity("");
                 setMessage("");
             }, 3000);
         } else if (name === "") {
             setMessage("Please provide a name for your budget");
+            setSeverity("warning");
             setAlert(true);
             setTimeout(() => {
                 setAlert(false);
+                setSeverity("");
                 setMessage("");
             }, 3000);
         } else if (income === "" || otherIncome === "") {
             setMessage("Please complete income fields");
+            setSeverity("warning");
             setAlert(true);
             setTimeout(() => {
                 setAlert(false);
+                setSeverity("");
                 setMessage("");
             }, 3000);
         } else if (
@@ -111,9 +121,41 @@ export default function Home() {
             otherOutgoings === ""
         ) {
             setMessage("Please complete outgoing fields");
+            setSeverity("warning");
             setAlert(true);
             setTimeout(() => {
                 setAlert(false);
+                setSeverity("");
+                setMessage("");
+            }, 3000);
+        } else if (
+            income.includes("e") ||
+            otherIncome.includes("e") ||
+            mortgage.includes("e") ||
+            car.includes("e") ||
+            taxes.includes("e") ||
+            media.includes("e") ||
+            food.includes("e") ||
+            insurance.includes("e") ||
+            creditors.includes("e") ||
+            otherOutgoings.includes("e") ||
+            income.includes("-") ||
+            otherIncome.includes("-") ||
+            mortgage.includes("-") ||
+            car.includes("-") ||
+            taxes.includes("-") ||
+            media.includes("-") ||
+            food.includes("-") ||
+            insurance.includes("-") ||
+            creditors.includes("-") ||
+            otherOutgoings.includes("-")
+        ) {
+            setMessage("Do not use negative numbers or Euler's number");
+            setSeverity("warning");
+            setAlert(true);
+            setTimeout(() => {
+                setAlert(false);
+                setSeverity("");
                 setMessage("");
             }, 3000);
         } else {
@@ -143,6 +185,14 @@ export default function Home() {
                 })
                 .catch((err) => {
                     console.log(err);
+                    setMessage("Something went wrong - Please try again");
+                    setSeverity("error");
+                    setAlert(true);
+                    setTimeout(() => {
+                        setAlert(false);
+                        setSeverity("");
+                        setMessage("");
+                    }, 3000);
                 });
         }
     };
@@ -152,14 +202,14 @@ export default function Home() {
             <Nav />
             <main className="home">
                 <h1>
-                    Hi,{" "}
+                    Welcome,{" "}
                     {customer.first_name &&
                         customer.first_name.charAt(0).toUpperCase() +
                             customer.first_name.slice(1)}
-                    , let's sort your budget!
+                    . let's sort out your budget!
                 </h1>
                 <h2> </h2>
-                <h3>Pick a currency</h3>
+                <h3>Please pick a currency</h3>
                 <section className="currency">
                     <Button
                         className={
@@ -407,7 +457,9 @@ export default function Home() {
                                 Create budget
                             </Button>
                         ) : (
-                            <p className="alert">{message}</p>
+                            <Alert severity={severity} variant="filled">
+                                {message}
+                            </Alert>
                         )}
                     </section>
                 )}

@@ -6,6 +6,7 @@ import axios from "axios";
 import regexPatterns from "../utils/regex";
 import TextField from "@mui/material/TextField";
 import Logo from "../assets/budget-logo.png";
+import Alert from "@mui/material/Alert";
 
 export default function Register() {
     const navigate = useNavigate();
@@ -20,6 +21,7 @@ export default function Register() {
     //Alerts
     const [alert, setAlert] = useState(false);
     const [message, setMessage] = useState("");
+    const [severity, setSeverity] = useState("");
 
     //Register user
     const handleRegister = async () => {
@@ -39,41 +41,51 @@ export default function Register() {
             password === ""
         ) {
             setMessage("Please complete all required fields");
+            setSeverity("warning");
             setAlert(true);
             setTimeout(() => {
                 setAlert(false);
+                setSeverity("");
                 setMessage("");
             }, 3000);
         } else if (!email.match(regexPatterns.email)) {
             setMessage("Please enter a valid email address");
+            setSeverity("warning ");
             setAlert(true);
             setTimeout(() => {
                 setAlert(false);
+                setSeverity("");
                 setMessage("");
             }, 3000);
         } else if (phone && !phone.match(regexPatterns.phone)) {
             setMessage(
                 "If entering a phone number please provide a valid number"
             );
+            setSeverity("warning");
             setAlert(true);
             setTimeout(() => {
                 setAlert(false);
+                setSeverity("");
                 setMessage("");
             }, 3000);
         } else if (!password.match(regexPatterns.password)) {
             setMessage(
                 "Password must be at least 8 characters long and contain at least one uppercase, lowercase, number an special character"
             );
+            setSeverity("");
             setAlert(true);
             setTimeout(() => {
                 setAlert(false);
+                setSeverity("");
                 setMessage("");
             }, 3000);
         } else if (password !== confirmPassword) {
             setMessage("Password do not match");
+            setSeverity("");
             setAlert(true);
             setTimeout(() => {
                 setAlert(false);
+                setSeverity("");
                 setMessage("");
             }, 3000);
         } else {
@@ -86,9 +98,11 @@ export default function Register() {
                     console.log(err.response);
                     if (err.response.data === "Email is already registered") {
                         setMessage("Email already registered");
+                        setSeverity("error");
                         setAlert(true);
                         setTimeout(() => {
                             setAlert(false);
+                            setSeverity("");
                             setMessage("");
                         }, 3000);
                     }
@@ -104,7 +118,7 @@ export default function Register() {
 
     return (
         <main className="register">
-            <img src={Logo} alt="main logo" />
+            <img src={Logo} alt="main logo" className="main_logo" />
             <h1>Register</h1>
             <TextField
                 className="input_field"
@@ -161,7 +175,9 @@ export default function Register() {
                     Register
                 </Button>
             ) : (
-                <p>{message}</p>
+                <Alert severity={severity} variant="filled">
+                    {message}
+                </Alert>
             )}
             <p>
                 Already registered? Click{" "}
