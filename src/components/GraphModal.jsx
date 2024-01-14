@@ -13,7 +13,7 @@ const style = {
     border: "2px solid #000",
     boxShadow: 24,
     p: 4,
-    borderRadius: '20px'
+    borderRadius: "20px",
 };
 
 export default function GraphModal({ setOpen, selectedBudget }) {
@@ -28,48 +28,56 @@ export default function GraphModal({ setOpen, selectedBudget }) {
                                     id: 0,
                                     value: selectedBudget.mortgage,
                                     label: "Mortgage/rent",
+                                    color: "#DDFFF7",
                                 },
                                 {
                                     id: 1,
                                     value: selectedBudget.car,
                                     label: "Car",
+                                    color: "#93E1D8",
                                 },
                                 {
                                     id: 2,
                                     value: selectedBudget.taxes,
                                     label: "Taxes",
+                                    color: "#FFA69E",
                                 },
                                 {
                                     id: 3,
                                     value: selectedBudget.media,
                                     label: "Media",
+                                    color: "#AA4465",
                                 },
                                 {
                                     id: 4,
                                     value: selectedBudget.food,
                                     label: "Food",
+                                    color: "#462255",
                                 },
                                 {
                                     id: 5,
                                     value: selectedBudget.insurance,
                                     label: "Insurance",
+                                    color: "#031D44",
                                 },
                                 {
                                     id: 6,
                                     value: selectedBudget.creditors,
                                     label: "Creditors",
+                                    color: "#04395E",
                                 },
                                 {
                                     id: 7,
                                     value: selectedBudget.otherOutgoings,
                                     label: "Other outgoings",
+                                    color: "#70A288",
                                 },
                             ],
                             innerRadius: 40,
                             outerRadius: 100,
                             paddingAngle: 2,
                             cornerRadius: 5,
-                           
+
                             cx: 150,
                             cy: 150,
                         },
