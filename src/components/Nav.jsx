@@ -14,7 +14,7 @@ import { Divider } from "@mui/material";
 
 //Styling
 const menuMargin = {
-    marginRight: "12px",
+    margin: "0 20px",
     color: "rgb(71, 110, 158)",
 };
 
@@ -121,6 +121,7 @@ export default function Nav() {
                                 navigate("/view-budgets");
                                 handleClose();
                             }}
+                            sx={{marginRight: '20px'}}
                         >
                             <BarChartIcon sx={menuMargin} />
                             Budgets
