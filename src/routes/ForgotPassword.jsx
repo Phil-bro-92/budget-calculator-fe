@@ -42,12 +42,29 @@ export default function ForgotPassword() {
             }, 3000);
         } else {
             axios
-                .post(`${url}/password_reset`, data)
+                .post(`${url}/password-reset`, data)
                 .then((res) => {
                     console.log(res.data);
+                    setMessage(
+                        "Please check you email for password reset instructions"
+                    );
+                    setSeverity("success");
+                    setAlert(true);
+                    setTimeout(() => {
+                        setAlert(false);
+                        setMessage("");
+                        setSeverity("");
+                    }, 3000);
                 })
                 .catch((err) => {
-                    console.log(err);
+                    setMessage("Something went wrong - Please try again");
+                    setSeverity("error");
+                    setAlert(true);
+                    setTimeout(() => {
+                        setAlert(false);
+                        setMessage("");
+                        setSeverity("");
+                    }, 3000);
                 });
         }
     };
@@ -69,8 +86,8 @@ export default function ForgotPassword() {
 
             <TextField
                 className="input_field"
-                type="password"
-                label="Password"
+                type="email"
+                label="Email"
                 variant="filled"
                 onChange={(e) => setEmail(e.target.value)}
                 onKeyDown={(e) => handleEnterPress(e)}

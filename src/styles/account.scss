@@ -18,4 +18,9 @@
             width: 45%;
         }
     }
+
+    @media (min-width: $medium-screen) {
+        max-width: 50%;
+        margin: 0 auto;
+    }
 }

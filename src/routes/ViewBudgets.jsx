@@ -12,7 +12,7 @@ import { Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PieChartIcon from "@mui/icons-material/PieChart";
 import DeleteCheckModal from "../components/DeleteCheckModal";
-
+import Tooltip from "@mui/material/Tooltip";
 import Modal from "@mui/material/Modal";
 import GraphModal from "../components/GraphModal";
 
@@ -88,12 +88,13 @@ export default function ViewBudgets() {
                             sx={{
                                 display: "flex",
                                 justifyContent: "space-evenly",
+                                flexDirection: "column",
                                 width: "95%",
                                 margin: "20px auto",
                                 minWidth: 120,
                             }}
                         >
-                            <FormControl sx={{ width: "80%" }}>
+                            <FormControl sx={{ width: "100%" }}>
                                 <InputLabel>Budgets</InputLabel>
                                 <Select
                                     label="Budget"
@@ -111,23 +112,35 @@ export default function ViewBudgets() {
                                 </Select>
                             </FormControl>
                             {Object.keys(selectedBudget).length > 0 && (
-                                <>
-                                    <Button
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={() => setOpen(true)}
-                                    >
-                                        <PieChartIcon />
-                                    </Button>
-
-                                    <Button
-                                        variant="contained"
-                                        color="error"
-                                        onClick={() => setOpenCheck(true)}
-                                    >
-                                        <DeleteIcon />
-                                    </Button>
-                                </>
+                                <section
+                                    style={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        marginTop: "10px",
+                                    }}
+                                >
+                                    {" "}
+                                    <Tooltip title="View Pie Chart">
+                                        <Button
+                                            variant="contained"
+                                            color="secondary"
+                                            onClick={() => setOpen(true)}
+                                            sx={{ width: "45%" }}
+                                        >
+                                            <PieChartIcon />
+                                        </Button>
+                                    </Tooltip>
+                                    <Tooltip title="Delete Budget">
+                                        <Button
+                                            variant="contained"
+                                            color="error"
+                                            onClick={() => setOpenCheck(true)}
+                                            sx={{ width: "45%" }}
+                                        >
+                                            <DeleteIcon />
+                                        </Button>
+                                    </Tooltip>
+                                </section>
                             )}
                         </Box>
                     </>

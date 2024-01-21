@@ -1,7 +1,5 @@
 @import "./variables.scss";
 
-
-
 .home {
     background-color: $background;
     padding: 0 5% 5%;
@@ -10,41 +8,73 @@
         padding-top: 20px;
     }
 
-    .currency {
-        @include flex($justify: "space-evenly");
+    .main_body {
+        .currency {
+            @include flex($justify: "space-evenly");
 
-        .pound,
-        .dollar,
-        .euro,
-        .yen,
+            .pound,
+            .dollar,
+            .euro,
+            .yen,
+            .selected_currency {
+                width: 21.25%;
+                height: 40px;
+                margin: 0;
+                padding: 1% 0;
+            }
+
+            .dollar {
+                margin: 0 2% 0 5%;
+            }
+
+            .euro {
+                margin: 0 5% 0 3%;
+            }
+        }
+
         .selected_currency {
-            width: 21.25%;
-            height: 40px;
-            margin: 0;
-            padding: 1% 0;
+            border: 3px solid $secondary;
+            color: #000;
         }
 
-        .dollar {
-            margin: 0 2% 0 5%;
+        .input_field_name {
+            margin: 20px 0;
+            width: 100%;
         }
 
-        .euro {
-            margin: 0 5% 0 3%;
+        .input_field {
+            margin: 10px auto;
+            width: 100%;
+        }
+
+        .logo {
+            display: none;
         }
     }
 
-    .selected_currency {
-        border: 3px solid $secondary;
-        color: #000;
-    }
+    @media (min-width: $medium-screen) {
+        .main_body {
+            @include flex($justify: space-between, $align: start);
+            .first_section {
+                width: 55%;
+            }
 
-    .input_field_name {
-        margin: 20px 0;
-        width: 100%;
-    }
+            .income_outgoing {
+                width: 35%;
+                background-color: rgb(168, 216, 198);
+                padding: 15px;
+                border-radius: 8px;
+                color: $text;
 
-    .input_field {
-        margin: 10px auto;
-        width: 100%;
+            }
+
+            .logo {
+                display: flex;
+                width: 80%;
+                margin: 50px auto;
+                border-radius: 20px;
+                max-width: 500px;
+            }
+        }
     }
 }

@@ -15,6 +15,7 @@ import InputLabel from "@mui/material/InputLabel";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import Alert from "@mui/material/Alert";
+import Logo from "../assets/budget-logo.png";
 
 export default function Home() {
     const navigate = useNavigate();
@@ -208,244 +209,112 @@ export default function Home() {
                             customer.first_name.slice(1)}
                     . let's sort out your budget!
                 </h1>
-                <h2> </h2>
-                <h3>Please pick a currency</h3>
-                <section className="currency">
-                    <Button
-                        className={
-                            selectedCurrency === "pound"
-                                ? "selected_currency"
-                                : "pound"
-                        }
-                        variant="contained"
-                        onClick={() => handleSelectedCurrency("pound")}
-                    >
-                        {" "}
-                        <CurrencyPoundIcon />
-                    </Button>
-                    <Button
-                        className={
-                            selectedCurrency === "dollar"
-                                ? "selected_currency dollar"
-                                : "dollar"
-                        }
-                        variant="contained"
-                        color="success"
-                        onClick={() => handleSelectedCurrency("dollar")}
-                    >
-                        <AttachMoneyIcon />
-                    </Button>
-                    <Button
-                        className={
-                            selectedCurrency === "euro"
-                                ? "selected_currency euro"
-                                : "euro"
-                        }
-                        variant="contained"
-                        color="warning"
-                        onClick={() => handleSelectedCurrency("euro")}
-                    >
-                        {" "}
-                        <EuroSymbolIcon />
-                    </Button>
-                    <Button
-                        className={
-                            selectedCurrency === "yen"
-                                ? "selected_currency"
-                                : "yen"
-                        }
-                        variant="contained"
-                        color="error"
-                        onClick={() => handleSelectedCurrency("yen")}
-                    >
-                        {" "}
-                        <CurrencyYenIcon />
-                    </Button>
-                </section>
-
-                <TextField
-                    className="input_field_name"
-                    type="text"
-                    onChange={(e) => setName(e.target.value)}
-                    label="Give your budget a name"
-                    variant="outlined"
-                />
-
-                <FormControl sx={{ width: "100%" }}>
-                    <InputLabel>What period is your budget for?</InputLabel>
-                    <Select
-                        label="What period is you budget for?"
-                        onChange={(e) => setSelectedTime(e.target.value)}
-                    >
-                        <MenuItem value="Weekly">Weekly</MenuItem>
-                        <MenuItem value="Monthly">Monthly</MenuItem>
-                        <MenuItem value="Quarterly">Quarterly</MenuItem>
-                        <MenuItem value="Annually">Annually</MenuItem>
-                    </Select>
-                </FormControl>
-                {selectedCurrency && selectedTime && name && (
-                    <section className="income_outgoing">
-                        <h2>Income</h2>
-
-                        <TextField
-                            className="input_field"
-                            type="number"
-                            min="0"
-                            onChange={(e) => setIncome(e.target.value)}
-                            label="Main salary"
-                            variant="outlined"
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        {currencyIcon}
-                                    </InputAdornment>
-                                ),
-                            }}
-                        />
-                        <TextField
-                            className="input_field"
-                            type="number"
-                            min="0"
-                            onChange={(e) => setOtherIncome(e.target.value)}
-                            label="Other income"
-                            variant="outlined"
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        {currencyIcon}
-                                    </InputAdornment>
-                                ),
-                            }}
-                        />
-
-                        <h2>Outgoings</h2>
-
-                        <TextField
-                            className="input_field"
-                            type="number"
-                            min="0"
-                            onChange={(e) => setMortgage(e.target.value)}
-                            label="Mortgage/Rent"
-                            variant="outlined"
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        {currencyIcon}
-                                    </InputAdornment>
-                                ),
-                            }}
-                        />
-                        <TextField
-                            className="input_field"
-                            type="number"
-                            min="0"
-                            onChange={(e) => setCar(e.target.value)}
-                            label="Car"
-                            variant="outlined"
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        {currencyIcon}
-                                    </InputAdornment>
-                                ),
-                            }}
-                        />
-                        <TextField
-                            className="input_field"
-                            type="number"
-                            min="0"
-                            onChange={(e) => setTaxes(e.target.value)}
-                            label="Taxes"
-                            variant="outlined"
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        {currencyIcon}
-                                    </InputAdornment>
-                                ),
-                            }}
-                        />
-                        <TextField
-                            className="input_field"
-                            type="number"
-                            min="0"
-                            onChange={(e) => setMedia(e.target.value)}
-                            label="TV/Media"
-                            variant="outlined"
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        {currencyIcon}
-                                    </InputAdornment>
-                                ),
-                            }}
-                        />
-                        <TextField
-                            className="input_field"
-                            type="number"
-                            min="0"
-                            onChange={(e) => setFood(e.target.value)}
-                            label="Food/Essentials"
-                            variant="outlined"
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        {currencyIcon}
-                                    </InputAdornment>
-                                ),
-                            }}
-                        />
-                        <TextField
-                            className="input_field"
-                            type="number"
-                            min="0"
-                            onChange={(e) => setInsurance(e.target.value)}
-                            label="Insurance"
-                            variant="outlined"
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        {currencyIcon}
-                                    </InputAdornment>
-                                ),
-                            }}
-                        />
-                        <TextField
-                            className="input_field"
-                            type="number"
-                            min="0"
-                            onChange={(e) => setCreditors(e.target.value)}
-                            label="Creditors"
-                            variant="outlined"
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        {currencyIcon}
-                                    </InputAdornment>
-                                ),
-                            }}
-                        />
-                        <TextField
-                            className="input_field"
-                            type="number"
-                            min="0"
-                            onChange={(e) => setOtherOutgoings(e.target.value)}
-                            label="Other Outgoings"
-                            variant="outlined"
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        {currencyIcon}
-                                    </InputAdornment>
-                                ),
-                            }}
-                        />
-                        {!alert ? (
+                <section className="main_body">
+                    <div className="first_section">
+                        <h3>
+                            Please pick a currency{" "}
+                            {selectedCurrency && (
+                                <span style={{ color: "rgb(62, 133, 137)" }}>
+                                    - {selectedCurrency.toUpperCase()} (
+                                    {currencyIcon})
+                                </span>
+                            )}
+                        </h3>
+                        <section className="currency">
                             <Button
-                                sx={{ width: "100%", margin: "30px 0" }}
+                                className={
+                                    selectedCurrency === "pound"
+                                        ? "selected_currency"
+                                        : "pound"
+                                }
                                 variant="contained"
-                                className="submit_btn"
-                                onClick={handleSubmit}
+                                onClick={() => handleSelectedCurrency("pound")}
+                            >
+                                {" "}
+                                <CurrencyPoundIcon />
+                            </Button>
+                            <Button
+                                className={
+                                    selectedCurrency === "dollar"
+                                        ? "selected_currency dollar"
+                                        : "dollar"
+                                }
+                                variant="contained"
+                                color="success"
+                                onClick={() => handleSelectedCurrency("dollar")}
+                            >
+                                <AttachMoneyIcon />
+                            </Button>
+                            <Button
+                                className={
+                                    selectedCurrency === "euro"
+                                        ? "selected_currency euro"
+                                        : "euro"
+                                }
+                                variant="contained"
+                                color="warning"
+                                onClick={() => handleSelectedCurrency("euro")}
+                            >
+                                {" "}
+                                <EuroSymbolIcon />
+                            </Button>
+                            <Button
+                                className={
+                                    selectedCurrency === "yen"
+                                        ? "selected_currency"
+                                        : "yen"
+                                }
+                                variant="contained"
+                                color="error"
+                                onClick={() => handleSelectedCurrency("yen")}
+                            >
+                                {" "}
+                                <CurrencyYenIcon />
+                            </Button>
+                        </section>
+                        <section className="name_period">
+                            <TextField
+                                className="input_field_name"
+                                type="text"
+                                onChange={(e) => setName(e.target.value)}
+                                label="Give your budget a name"
+                                variant="outlined"
+                            />
+
+                            <FormControl sx={{ width: "100%" }}>
+                                <InputLabel>
+                                    What period is your budget for?
+                                </InputLabel>
+                                <Select
+                                    label="What period is you budget for?"
+                                    onChange={(e) =>
+                                        setSelectedTime(e.target.value)
+                                    }
+                                >
+                                    <MenuItem value="Weekly">Weekly</MenuItem>
+                                    <MenuItem value="Monthly">Monthly</MenuItem>
+                                    <MenuItem value="Quarterly">
+                                        Quarterly
+                                    </MenuItem>
+                                    <MenuItem value="Annually">
+                                        Annually
+                                    </MenuItem>
+                                </Select>
+                            </FormControl>
+                            <img src={Logo} alt="App logo" className="logo" />
+                        </section>
+                    </div>
+                    {selectedCurrency && selectedTime && name && (
+                        <section className="income_outgoing">
+                            <h2>Income</h2>
+
+                            <TextField
+                                className="input_field"
+                                type="number"
+                                min="0"
+                                onChange={(e) => setIncome(e.target.value)}
+                                label="Main salary"
+                                variant="outlined"
                                 InputProps={{
                                     startAdornment: (
                                         <InputAdornment position="start">
@@ -453,16 +322,171 @@ export default function Home() {
                                         </InputAdornment>
                                     ),
                                 }}
-                            >
-                                Create budget
-                            </Button>
-                        ) : (
-                            <Alert severity={severity} variant="filled">
-                                {message}
-                            </Alert>
-                        )}
-                    </section>
-                )}
+                            />
+                            <TextField
+                                className="input_field"
+                                type="number"
+                                min="0"
+                                onChange={(e) => setOtherIncome(e.target.value)}
+                                label="Other income"
+                                variant="outlined"
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            {currencyIcon}
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+
+                            <h2>Outgoings</h2>
+
+                            <TextField
+                                className="input_field"
+                                type="number"
+                                min="0"
+                                onChange={(e) => setMortgage(e.target.value)}
+                                label="Mortgage/Rent"
+                                variant="outlined"
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            {currencyIcon}
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+                            <TextField
+                                className="input_field"
+                                type="number"
+                                min="0"
+                                onChange={(e) => setCar(e.target.value)}
+                                label="Car"
+                                variant="outlined"
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            {currencyIcon}
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+                            <TextField
+                                className="input_field"
+                                type="number"
+                                min="0"
+                                onChange={(e) => setTaxes(e.target.value)}
+                                label="Taxes"
+                                variant="outlined"
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            {currencyIcon}
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+                            <TextField
+                                className="input_field"
+                                type="number"
+                                min="0"
+                                onChange={(e) => setMedia(e.target.value)}
+                                label="TV/Media"
+                                variant="outlined"
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            {currencyIcon}
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+                            <TextField
+                                className="input_field"
+                                type="number"
+                                min="0"
+                                onChange={(e) => setFood(e.target.value)}
+                                label="Food/Essentials"
+                                variant="outlined"
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            {currencyIcon}
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+                            <TextField
+                                className="input_field"
+                                type="number"
+                                min="0"
+                                onChange={(e) => setInsurance(e.target.value)}
+                                label="Insurance"
+                                variant="outlined"
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            {currencyIcon}
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+                            <TextField
+                                className="input_field"
+                                type="number"
+                                min="0"
+                                onChange={(e) => setCreditors(e.target.value)}
+                                label="Creditors"
+                                variant="outlined"
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            {currencyIcon}
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+                            <TextField
+                                className="input_field"
+                                type="number"
+                                min="0"
+                                onChange={(e) =>
+                                    setOtherOutgoings(e.target.value)
+                                }
+                                label="Other Outgoings"
+                                variant="outlined"
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            {currencyIcon}
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+                            {!alert ? (
+                                <Button
+                                    sx={{ width: "100%", margin: "30px 0" }}
+                                    variant="contained"
+                                    className="submit_btn"
+                                    onClick={handleSubmit}
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                {currencyIcon}
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                >
+                                    Create budget
+                                </Button>
+                            ) : (
+                                <Alert severity={severity} variant="filled">
+                                    {message}
+                                </Alert>
+                            )}
+                        </section>
+                    )}
+                </section>
             </main>
         </>
     );

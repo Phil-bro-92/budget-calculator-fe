@@ -4,6 +4,7 @@
     background-color: $background;
     padding: 3%;
     height: 130vh;
+
     h1 {
         text-align: center;
     }
@@ -79,5 +80,10 @@
                 border-top: 2px solid #c0bbbb;
             }
         }
+    }
+
+    @media (min-width: $medium-screen) {
+        max-width: 50%;
+        margin: 0 auto;
     }
 }
